@@ -1,10 +1,7 @@
-const express = require("express");
-// expres koda içe aktarım
-const bodyParser = require('body-parser');
-// gelen json parsellemek için yönetmek için içe aktarım
-const mongoose = require('mongoose');
-const Todo = require('./models.js');  
-
+const express = require("express"); // expres koda içe aktarım
+const bodyParser = require('body-parser'); // gelen json parsellemek için yönetmek için içe aktarım
+const mongoose = require('mongoose'); //mongodb bağlanmak için mongoose paketini içe aktarıyoruz
+const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave.js app.js ile bağlantı oluşturuyoruz
 
 const app = express();
 
@@ -14,18 +11,13 @@ mongoose.connect(dbURL, {useNewUrlParser: true,useUnifiedTopology:true})
   .catch((err)=>('eror'))
 
 
-// const PORT = 3000;
-// local port adresini belirleme
-app.use(bodyParser.json());
-// json olduğunu belirtmek için
+app.use(bodyParser.json()); // json olduğunu belirtmek için
 
 
-let tasks = [];
-// boş bir dizi oluşturmak için
+let tasks = []; // boş bir dizi oluşturmak için
 
 
 app.get('/api/todos', (req, res) => {
-
     res.status(200).json(tasks);
   });
 
@@ -33,11 +25,8 @@ app.get('/api/todos', (req, res) => {
     const { title, description } = req.body;
     const newTask = new Todo({
       title: title,
-    //   göreve başlık eklmek için
       description: description,
-    //   görevin açıklaması
       completed: false
-    //   görevin yapılıp yapılmadığı
     });
     newTask.save()
       .then((result)=>(
@@ -46,28 +35,8 @@ app.get('/api/todos', (req, res) => {
       .catch((err)=>{
         console.log(err);
       })
-    // tasks.push(newTask);
-    // boş dizinin içine aktarır
-    // res.status(201).json(newTask);
   });
 
-
-// app.post('/api/todos', (req, res) => {
-//     const { title, description } = req.body;
-//     const newTask = {
-//       id: tasks.length + 1,
-//     //   sırayla otomatik artırmak için
-//       title: title,
-//     //   göreve başlık eklmek için
-//       description: description,
-//     //   görevin açıklaması
-//       completed: false
-//     //   görevin yapılıp yapılmadığı
-//     };
-//     tasks.push(newTask);
-//     // boş dizinin içine aktarır
-//     res.status(201).json(newTask);
-//   });
 
   app.put('/api/todos/:id', (req, res) => {
     const { id } = req.params;
@@ -96,7 +65,3 @@ app.get('/api/todos', (req, res) => {
     }
   });
 
-
-//   app.listen(PORT,function(){
-//     console.log("server in started at port" + PORT );
-// });

@@ -2,6 +2,17 @@ const express = require("express"); // expres koda içe aktarım
 const bodyParser = require('body-parser'); // gelen json parsellemek için yönetmek için içe aktarım
 const mongoose = require('mongoose'); //mongodb bağlanmak için mongoose paketini içe aktarıyoruz
 const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave.js app.js ile bağlantı oluşturuyoruz
+require('./config/db'); // Connect to MongoDB
+
+const app = express();
+const port = 3000;
+
+const UserRouter = require('./api/User');
+const TaskRouter = require('./api/Task'); // Import Task routes
+
+app.use(express.json()); // Middleware to parse JSON
+
+
 
 // const app = express();
 
@@ -17,6 +28,8 @@ const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave
 
 let tasks = []; // boş bir dizi oluşturmak için
 
+app.use('/user', UserRouter); // User routes
+app.use('/tasks', TaskRouter); // Task routes
 
 // app.get('/api/todos', (req, res) => {
 //     res.status(200).json(tasks);
@@ -66,3 +79,6 @@ let tasks = []; // boş bir dizi oluşturmak için
 //     }
 //   });
 
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

@@ -2,7 +2,9 @@ const express = require("express"); // expres koda içe aktarım
 const bodyParser = require('body-parser'); // gelen json parsellemek için yönetmek için içe aktarım
 const mongoose = require('mongoose'); //mongodb bağlanmak için mongoose paketini içe aktarıyoruz
 const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave.js app.js ile bağlantı oluşturuyoruz
-require('./config/db'); // Connect to MongoDB
+const db = require('./config/database'); // Connect to MongoDB
+const cors = require('cors');
+const dotenv = require('dotenv')
 
 const app = express();
 const port = 3000;

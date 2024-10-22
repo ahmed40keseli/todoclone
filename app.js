@@ -1,37 +1,34 @@
 const express = require("express"); // expres koda içe aktarım
-const bodyParser = require('body-parser'); // gelen json parsellemek için yönetmek için içe aktarım
-const mongoose = require('mongoose'); //mongodb bağlanmak için mongoose paketini içe aktarıyoruz
-const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave.js app.js ile bağlantı oluşturuyoruz
-const db = require('./config/database'); // Connect to MongoDB
+// const bodyParser = require('body-parser'); // gelen json parsellemek için yönetmek için içe aktarım
+// const mongoose = require('mongoose'); //mongodb bağlanmak için mongoose paketini içe aktarıyoruz
+// const Todo = require('./models/Tasksave'); //models klasörü içindeki tasksave.js app.js ile bağlantı oluşturuyoruz
+const db = require('./config/database.js'); // Connect to MongoDB
 const cors = require('cors');
 const dotenv = require('dotenv')
+const Auth = require('./routes/auth.js')
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
-
-const UserRouter = require('./api/User');
-const TaskRouter = require('./api/Task'); // Import Task routes
+app.use(cors());
 
 app.use(express.json()); // Middleware to parse JSON
+app.use(express.json({limit:'30mb',extended:true})); //? 
+app.use(express.urlencoded({limit:'30mb',extended:true})); //?
+
+app.use('/',Auth);
 
 
+// app.get('/',(req,res)=>{
+//   res.json({message:"deneme deneme 123"})
+// })
 
-// const app = express();
+const PORT = process.env.PORT || 3000;
 
+// let tasks = []; // boş bir dizi oluşturmak için
 
-// const dbURL = 'mongodb+srv://krkkseli:asd123@todoclone.ghhoy.mongodb.net/?retryWrites=true&w=majority&appName=TodoClone';
-// mongoose.connect(dbURL, {useNewUrlParser: true,useUnifiedTopology:true})
-//   .then((result)=>  app.listen(3000))
-//   .catch((err)=>('eror'))
-
-
-// app.use(bodyParser.json()); // json olduğunu belirtmek için
-
-
-let tasks = []; // boş bir dizi oluşturmak için
-
-app.use('/user', UserRouter); // User routes
-app.use('/tasks', TaskRouter); // Task routes
+// app.use('/user', UserRouter); // User routes
+// app.use('/tasks', TaskRouter); // Task routes
 
 // app.get('/api/todos', (req, res) => {
 //     res.status(200).json(tasks);
@@ -81,6 +78,6 @@ app.use('/tasks', TaskRouter); // Task routes
 //     }
 //   });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });

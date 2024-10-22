@@ -10,6 +10,11 @@ const register = async(req,res) => { // async = asenkron olmasını sağlar
         if(user){
             return res.status(500).json({message: 'bu hesap zaten var'})
         }
+
+        if(password.lenght < 6){
+            return res.status(500).json({message:"parolaniz 6 haneden fazla olmali"})
+        }
+
         const passwordHash = await bcrypt.hash(password,12)
 
         const newUser = await Auth.create({username,email,password:passwordHash})

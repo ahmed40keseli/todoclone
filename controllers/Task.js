@@ -24,7 +24,7 @@ const getTasks = async(req,res)=>{
     }
 }
 
-const detailTasks = async(req,res)=>{
+const detailTask = async(req,res)=>{
     try {
         const {id} = req.params;
         const detailTasks = await TodoSchema.findById(id)
@@ -60,4 +60,4 @@ const deleteTask = async(req,res)=>{
     }
 }
 
-module.exports = {creatTask, getTasks, detailTasks, updateTask, deleteTask} 
+module.exports = {creatTask, getTasks, detailTask, updateTask, deleteTask} 

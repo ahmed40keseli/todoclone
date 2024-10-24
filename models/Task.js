@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const todoSchema = new Schema({
+const TodoSchema = new Schema({
     title: {
         type:String,
         required:[true,"bu alan zorunludur"]
@@ -16,6 +16,9 @@ const todoSchema = new Schema({
     }
 });
 
-const  Todo = mongoose.model('Todo',todoSchema)
-module.exports=Todo 
+// module.exports = mongoose.model('TODO', TodoSchema)
+
+const  Todom = mongoose.model('Todo',TodoSchema);
+
+module.exports= Todom 
 

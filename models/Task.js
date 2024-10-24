@@ -16,8 +16,6 @@ const todoSchema = new Schema({
     }
 });
 
-// } {timestamps:true}) ile zamanı da kayıt edebiliyoruz
-
 const  Todo = mongoose.model('Todo',todoSchema)
 module.exports=Todo 
 

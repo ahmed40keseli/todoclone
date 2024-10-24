@@ -23,7 +23,7 @@ const register = async(req,res) => { // async = asenkron olmasını sağlar
 
         res.status(201).json({
             status: "OK",
-            newUserUser,
+            newUser,
             userToken
         })
 
@@ -37,7 +37,7 @@ const login = async(req,res) =>{
     const {email,password} = req.body ;
     const user = await Auth.findOne({email});
     if(!user){
-        return res.status(500).json({message: "bu hesap zaten kayitli"})
+        return res.status(500).json({message: "boyle bir kullanici bulunamadis"})
     }
     const comparePassword = await bcrypt.compare(password,user.password)
     if(!comparePassword){

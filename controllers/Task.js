@@ -3,8 +3,8 @@ const TodoSchema = require('../models/Task.js')
 
 const creatTask= async(req,res)=>{
     try {
-        const newTask = await Todom.create(req.body)
-        req.status(201).json({
+        const newTask = await TodoSchema.create(req.body)
+        res.status(201).json({
             newTask
         })
     } catch (error) {
@@ -15,8 +15,8 @@ const creatTask= async(req,res)=>{
 
 const getTasks = async(req,res)=>{
     try {
-        const getTasks = await TODO.find()
-        req.status(201).json({
+        const getTasks = await TodoSchema.find()
+        res.status(201).json({
             getTasks
         })
     } catch (error) {
@@ -27,8 +27,8 @@ const getTasks = async(req,res)=>{
 const detailTasks = async(req,res)=>{
     try {
         const {id} = req.params;
-        const detailTasks = await TODO.findById(id)
-        req.status(200).json({
+        const detailTasks = await TodoSchema.findById(id)
+        res.status(200).json({
             detailTasks
         })
     } catch (error) {
@@ -39,8 +39,8 @@ const detailTasks = async(req,res)=>{
 const updateTask = async(req,res)=>{
     try {
         const {id} = req.params;
-        const updateTask = await TODO.findByIdAndUpdate(id, req.body, {new:true})
-        req.status(201).json({
+        const updateTask = await TodoSchema.findByIdAndUpdate(id, req.body, {new:true})
+        res.status(201).json({
             updateTask
         })
     } catch (error) {
@@ -51,13 +51,13 @@ const updateTask = async(req,res)=>{
 const deleteTask = async(req,res)=>{
     try {
         const {id} = req.params;
-        await TODO.findByAndRemove(req.body)
-        req.status(201).json({
+        await TodoSchema.findByIdAndDelete(id)
+        res.status(201).json({
             message:"silme isleminiz basari ile gerceklesti"
         })
-    } catch (error) {
+    } catch (error) {       
         return res.status(500).json({message: error.message})
     }
 }
 
-module.exports = {creatTask, getTasks, detailTasks, updateTask, deleteTask}
+module.exports = {creatTask, getTasks, detailTasks, updateTask, deleteTask} 
